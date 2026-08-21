@@ -1,0 +1,20 @@
+node_modules/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Build output
+dist/
+build/
+
+# Prisma generated files
+/generated/prisma
+
+# Logs
+*.log
+
+server/.agents/
+server/.claude/
+server/.windsurf/

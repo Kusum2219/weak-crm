@@ -1,0 +1,95 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Student {
+  id            Int           @id @default(autoincrement())
+  studentId     String        @unique
+  firstName     String
+  lastName      String?
+  email         String?       @unique
+  phone         String?
+  dateOfBirth   DateTime?
+  gender        Gender?
+  className     String
+  section       String?
+  rollNumber    String?
+  guardianName  String?
+  guardianPhone String?
+  address       String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  followUps     FollowUp[]
+  performances  Performance[]
+
+  @@index([className])
+  @@index([section])
+}
+
+model Subject {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  createdAt    DateTime      @default(now())
+  performances Performance[]
+}
+
+model Performance {
+  id            Int       @id @default(autoincrement())
+  studentId     Int
+  subjectId     Int
+  examName      String?
+  examDate      DateTime?
+  marksObtained Float
+  totalMarks    Float
+  percentage    Float
+  riskLevel     RiskLevel
+  remarks       String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  student       Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  subject       Subject   @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([subjectId])
+  @@index([examDate])
+  @@index([riskLevel])
+}
+
+model FollowUp {
+  id           Int            @id @default(autoincrement())
+  studentId    Int
+  followUpDate DateTime
+  reason       String
+  remarks      String?
+  status       FollowUpStatus @default(PENDING)
+  completedAt  DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  student      Student        @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([followUpDate])
+  @@index([status])
+}
+
+enum RiskLevel {
+  HIGH
+  MEDIUM
+  LOW
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum FollowUpStatus {
+  PENDING
+  COMPLETED
+  OVERDUE
+}
