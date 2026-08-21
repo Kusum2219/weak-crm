@@ -15,6 +15,6 @@ build/
 # Logs
 *.log
 
-server/.agents/
-server/.claude/
-server/.windsurf/
+.agents/
+.claude/
+.windsurf/
