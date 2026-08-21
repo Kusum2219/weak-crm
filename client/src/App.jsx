@@ -8,7 +8,7 @@ import {
 import Sidebar from "./components/Sidebar";
 
 import Dashboard from "./pages/Dashboard";
-import Students from "./pages/Students";
+import Students from "./pages/students";
 import FollowUp from "./pages/FollowUp";
 import Performance from "./pages/Performance";
 import AtRisk from "./pages/AtRisk";
